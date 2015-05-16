@@ -1,17 +1,19 @@
 // Package stringutil contains utility functions for working with strings.
 package pentominoes
 
-import "fmt"
+//import "fmt"
 
 type piece struct {
-	width, height int
-	symbol rune
+	index int
+	width, height uint8
+	symbol byte
 	bits []uint8
 	forbiddenPositions map[int]bool
 }
 
-func NewPiece(width int, height int, symbol rune, bits []uint8, forbiddenPositions map[int]bool) *piece {
+func NewPiece(index int, width uint8, height uint8, symbol byte, bits []uint8, forbiddenPositions map[int]bool) *piece {
 	p := new(piece)
+	p.index = index
 	p.width = width
 	p.height = height
 	p.symbol = symbol
@@ -22,5 +24,26 @@ func NewPiece(width int, height int, symbol rune, bits []uint8, forbiddenPositio
 }
 
 func (p piece) Display() string {
-	return fmt.Sprintf("%b", p)
+	output := ""
+	var r, row, col uint8
+	row = p.height - 1
+	for r = 0; r < p.height; r++ {
+		rowBits := p.bits[row]
+		row--
+		//fmt.Printf("row: %d bits: %x\n", row, rowBits)
+
+	  var mask uint8
+		mask = (1 << (p.width - 1))
+	  for col = 0; col < p.width; col++ {
+			//fmt.Printf("col: %d mask: %d\n", col, mask)
+			if (rowBits & mask != 0) {
+				output += string(p.symbol)
+			} else {
+				output += "."
+			}
+			mask >>= 1
+		}
+		output += "\n"
+	}
+	return output
 }

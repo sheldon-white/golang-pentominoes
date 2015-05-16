@@ -9,7 +9,6 @@ type pieceset struct {
 
 func CreatePieceSet() *pieceset {
 	ps := new(pieceset)
-	//ps.piecePermutations = new([12]list.List)
 	// create all the permutations of all the pieces
 	// each list entry is a list of piece orientations
 	ps.createAllPermutations()
@@ -17,50 +16,49 @@ func CreatePieceSet() *pieceset {
 	return ps;
 }
 
-// FIXME flip to headecimal
 func (ps pieceset) createAllPermutations() {
 	l0 := list.New()
 	ps.piecePermutations[0] = l0
 
 	// ***
 	//   **
-	l0.PushFront(NewPiece(4, 2, 'S', []uint8{03, 016}, map[int]bool {8: true, 48: true}))
+	l0.PushFront(NewPiece(0, 4, 2, 'S', []uint8{0x3, 0xe}, map[int]bool {6: true, 40: true}))
 
 	//  ***
 	// **
-	l0.PushFront(NewPiece(4, 2, 'S', []uint8{014, 07}, map[int]bool {0: true, 56: true}))
+	l0.PushFront(NewPiece(0, 4, 2, 'S', []uint8{0xc, 0x7}, map[int]bool {0: true, 56: true}))
 
 	// **
 	//  ***
-	l0.PushFront(NewPiece(4, 2, 'S', []uint8{07, 014}, map[int]bool {8: true, 48: true}))
+	l0.PushFront(NewPiece(0, 4, 2, 'S', []uint8{0x7, 0xc}, map[int]bool {6: true, 40: true}))
 
 	//   **
 	// ***
-	l0.PushFront(NewPiece(4, 2, 'S', []uint8{016, 03}, map[int]bool {0: true, 56: true}))
+	l0.PushFront(NewPiece(0, 4, 2, 'S', []uint8{0xe, 0x3}, map[int]bool {0: true, 56: true}))
 
 	// *
 	// **
   //  *
   //  *
-	l0.PushFront(NewPiece(2, 4, 'S', []uint8{01, 01, 03, 02}, map[int]bool {10: true, 48: true}))
+	l0.PushFront(NewPiece(0, 2, 4, 'S', []uint8{0x1, 0x1, 0x3, 0x2}, map[int]bool {8: true, 20: true}))
 
 	//  *
 	//  *
   // **
   // *
-	l0.PushFront(NewPiece(2, 4, 'S', []uint8{02, 03, 01, 01}, map[int]bool {0: true, 58: true}))
+	l0.PushFront(NewPiece(0, 2, 4, 'S', []uint8{0x2, 0x3, 0x1, 0x1}, map[int]bool {0: true, 58: true}))
 
 	//  *
 	// **
   // *
   // *
-	l0.PushFront(NewPiece(2, 4, 'S', []uint8{02, 02, 03, 01}, map[int]bool {0: true, 58: true}))
+	l0.PushFront(NewPiece(0, 2, 4, 'S', []uint8{0x2, 0x2, 0x3, 0x1}, map[int]bool {0: true, 58: true}))
 
 	// *
 	// *
   // **
   //  *
-	l0.PushFront(NewPiece(2, 4, 'S', []uint8{01, 03, 02, 02}, map[int]bool {10: true, 48: true}))
+	l0.PushFront(NewPiece(0, 2, 4, 'S', []uint8{0x1, 0x3, 0x2, 0x2}, map[int]bool {8: true, 20: true}))
 
 	////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -68,14 +66,14 @@ func (ps pieceset) createAllPermutations() {
 	ps.piecePermutations[1] = l1
 
 	// *****
-	l1.PushFront(NewPiece(5, 1, 'A', []uint8{037}, map[int]bool { }))
+	l1.PushFront(NewPiece(1, 5, 1, 'A', []uint8{0x1f}, map[int]bool { }))
 
 	// *
 	// *
 	// *
 	// *
 	// *
-	l1.PushFront(NewPiece(1, 5, 'A', []uint8{01, 01, 01, 01, 01}, map[int]bool { }))
+	l1.PushFront(NewPiece(1, 1, 5, 'A', []uint8{0x1, 0x1, 0x1, 0x1, 0x1}, map[int]bool { }))
 
 	////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -84,43 +82,43 @@ func (ps pieceset) createAllPermutations() {
 
 	// ****
 	// *
-	l2.PushFront(NewPiece(4, 2, 'B', []uint8{010, 017}, map[int]bool {0: true,}))
+	l2.PushFront(NewPiece(2, 4, 2, 'B', []uint8{0x10, 0xf}, map[int]bool {0: true,}))
 
 	// ****
 	//    *
-	l2.PushFront(NewPiece(4, 2, 'B', []uint8{01, 017}, map[int]bool {8: true,}))
+	l2.PushFront(NewPiece(2, 4, 2, 'B', []uint8{0x1, 0xf}, map[int]bool {6: true,}))
 
 	// *
 	// ****
-	l2.PushFront(NewPiece(4, 2, 'B', []uint8{017, 010}, map[int]bool {48: true,}))
+	l2.PushFront(NewPiece(2, 4, 2, 'B', []uint8{0xf, 0x10}, map[int]bool {40: true,}))
 
 	//    *
 	// ****
-	l2.PushFront(NewPiece(4, 2, 'B', []uint8{017, 01}, map[int]bool {56: true,}))
+	l2.PushFront(NewPiece(2, 4, 2, 'B', []uint8{0xf, 0x1}, map[int]bool {56: true,}))
 
 	// **
 	// *
 	// *
 	// *
-	l2.PushFront(NewPiece(2, 4, 'B', []uint8{02, 02, 02, 03}, map[int]bool {0: true,}))
+	l2.PushFront(NewPiece(2, 2, 4, 'B', []uint8{0x2, 0x2, 0x2, 0x3}, map[int]bool {0: true,}))
 
 	// **
 	//  *
 	//  *
 	//  *
-	l2.PushFront(NewPiece(2, 4, 'B', []uint8{01, 01, 01, 03}, map[int]bool {10: true,}))
+	l2.PushFront(NewPiece(2, 2, 4, 'B', []uint8{0x1, 0x1, 0x1, 0x3}, map[int]bool {8: true,}))
 
 	// *
 	// *
 	// *
 	// **
-	l2.PushFront(NewPiece(2, 4, 'B', []uint8{03, 02, 02, 02}, map[int]bool {48: true,}))
+	l2.PushFront(NewPiece(2, 2, 4, 'B', []uint8{0x3, 0x2, 0x2, 0x2}, map[int]bool {20: true,}))
 
 	//  *
 	//  *
 	//  *
 	// **
-	l2.PushFront(NewPiece(2, 4, 'B', []uint8{03, 01, 01, 01}, map[int]bool {58: true,}))
+	l2.PushFront(NewPiece(2, 2, 4, 'B', []uint8{0x3, 0x1, 0x1, 0x1}, map[int]bool {58: true,}))
 
 	////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -129,43 +127,43 @@ func (ps pieceset) createAllPermutations() {
 
 	// ****
 	//  *
-	l3.PushFront(NewPiece(4, 2, 'C', []uint8{04, 017}, map[int]bool {0: true, 8: true}))
+	l3.PushFront(NewPiece(3, 4, 2, 'C', []uint8{0x4, 0xf}, map[int]bool {0: true, 6: true}))
 
 	// ****
 	//   *
-	l3.PushFront(NewPiece(4, 2, 'C', []uint8{02, 017}, map[int]bool {0: true, 8: true}))
+	l3.PushFront(NewPiece(3, 4, 2, 'C', []uint8{0x2, 0xf}, map[int]bool {0: true, 6: true}))
 
 	//   *
 	// ****
-	l3.PushFront(NewPiece(4, 2, 'C', []uint8{017, 02}, map[int]bool {48: true, 56: true}))
+	l3.PushFront(NewPiece(3, 4, 2, 'C', []uint8{0xf, 0x2}, map[int]bool {40: true, 56: true}))
 
 	//  *
 	// ****
-	l3.PushFront(NewPiece(4, 2, 'C', []uint8{017, 04}, map[int]bool {48: true, 56: true}))
+	l3.PushFront(NewPiece(3, 4, 2, 'C', []uint8{0xf, 0x4}, map[int]bool {40: true, 56: true}))
 
 	// *
 	// **
   // *
   // *
-	l3.PushFront(NewPiece(2, 4, 'C', []uint8{02, 02, 03, 02}, map[int]bool {0: true, 48: true}))
+	l3.PushFront(NewPiece(3, 2, 4, 'C', []uint8{0x2, 0x2, 0x3, 0x2}, map[int]bool {0: true, 20: true}))
 
 	// *
 	// *
   // **
   // *
-	l3.PushFront(NewPiece(2, 4, 'C', []uint8{02, 03, 02, 02}, map[int]bool {0: true, 48: true}))
+	l3.PushFront(NewPiece(3, 2, 4, 'C', []uint8{0x2, 0x3, 0x2, 0x2}, map[int]bool {0: true, 20: true}))
 
 	//  *
 	// **
   //  *
   //  *
-	l3.PushFront(NewPiece(2, 4, 'C', []uint8{01, 01, 03, 01}, map[int]bool {10: true, 58: true}))
+	l3.PushFront(NewPiece(3, 3, 4, 'C', []uint8{0x1, 0x1, 0x3, 0x1}, map[int]bool {8: true, 58: true}))
 
 	//  *
 	//  *
   // **
   //  *
-	l3.PushFront(NewPiece(2, 4, 'C', []uint8{01, 03, 01, 01}, map[int]bool {10: true, 58: true}))
+	l3.PushFront(NewPiece(3, 3, 4, 'C', []uint8{0x1, 0x3, 0x1, 0x1}, map[int]bool {8: true, 58: true}))
 
 	////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -175,22 +173,22 @@ func (ps pieceset) createAllPermutations() {
 	// ***
 	// *
 	// *
-	l4.PushFront(NewPiece(3, 3, 'D', []uint8{04, 04, 07}, map[int]bool {0: true}))
+	l4.PushFront(NewPiece(4, 3, 3, 'D', []uint8{0x4, 0x4, 0x7}, map[int]bool {0: true}))
 
 	// ***
 	//   *
 	//   *
-	l4.PushFront(NewPiece(3, 3, 'D', []uint8{01, 01, 07}, map[int]bool {9: true}))
+	l4.PushFront(NewPiece(4, 3, 3, 'D', []uint8{0x1, 0x1, 0x7}, map[int]bool {7: true}))
 
 	// *
 	// *
 	// ***
-	l4.PushFront(NewPiece(3, 3, 'D', []uint8{07, 04, 04}, map[int]bool {48: true}))
+	l4.PushFront(NewPiece(4, 3, 3, 'D', []uint8{0x7, 0x4, 0x4}, map[int]bool {30: true}))
 
 	//   *
 	//   *
 	// ***
-	l4.PushFront(NewPiece(3, 3, 'D', []uint8{07, 01, 01}, map[int]bool {57: true}))
+	l4.PushFront(NewPiece(4, 3, 3, 'D', []uint8{0x7, 0x1, 0x1}, map[int]bool {57: true}))
 
 	////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -200,22 +198,22 @@ func (ps pieceset) createAllPermutations() {
 	// ***
 	//  *
 	//  *
-	l5.PushFront(NewPiece(3, 3, 'E', []uint8{02, 02, 07}, map[int]bool {0: true, 9: true}))
+	l5.PushFront(NewPiece(5, 3, 3, 'E', []uint8{0x2, 0x2, 0x7}, map[int]bool {0: true, 7: true}))
 
 	//  *
 	//  *
 	// ***
-	l5.PushFront(NewPiece(3, 3, 'E', []uint8{07, 02, 02}, map[int]bool {48: true, 57: true}))
+	l5.PushFront(NewPiece(5, 3, 3, 'E', []uint8{0x7, 0x2, 0x2}, map[int]bool {30: true, 57: true}))
 
 	// *
 	// ***
 	// *
-	l5.PushFront(NewPiece(3, 3, 'E', []uint8{04, 07, 04}, map[int]bool {0: true, 48: true}))
+	l5.PushFront(NewPiece(5, 3, 3, 'E', []uint8{0x4, 0x7, 0x4}, map[int]bool {0: true, 30: true}))
 
 	//   *
 	// ***
 	//   *
-	l5.PushFront(NewPiece(3, 3, 'E', []uint8{01, 07, 01}, map[int]bool {9: true, 57: true}))
+	l5.PushFront(NewPiece(5, 3, 3, 'E', []uint8{0x1, 0x7, 0x1}, map[int]bool {7: true, 57: true}))
 
 	////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -225,7 +223,7 @@ func (ps pieceset) createAllPermutations() {
 	//  *
 	// ***
 	//  *
-	l6.PushFront(NewPiece(3, 3, 'F', []uint8{02, 07, 02}, map[int]bool {0: true, 48: true, 9: true, 57: true}))
+	l6.PushFront(NewPiece(6, 3, 3, 'F', []uint8{0x2, 0x7, 0x2}, map[int]bool {0: true, 30: true, 7: true, 57: true}))
 
 	////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -234,25 +232,26 @@ func (ps pieceset) createAllPermutations() {
 
 	// ***
 	// * *
-	l7.PushFront(NewPiece(3, 2, 'G', []uint8{05, 07}, map[int]bool {
-		0: true, 1: true, 2: true, 3: true, 4: true, 5: true, 6: true, 7: true, 8: true, 9: true}))
+	l7.PushFront(NewPiece(7, 3, 2, 'G', []uint8{0x5, 0x7}, map[int]bool {
+		0: true, 1: true, 2: true, 3: true, 4: true, 5: true, 6: true, 7: true}))
 
 	// * *
 	// ***
-	l7.PushFront(NewPiece(3, 2, 'G', []uint8{07, 05}, map[int]bool {
-		48: true, 49: true, 50: true, 51: true, 52: true, 53: true, 54: true, 55: true, 56: true, 57: true}))
+	l7.PushFront(NewPiece(7, 3, 2, 'G', []uint8{0x7, 0x5}, map[int]bool {
+		40: true, 41: true, 42: true, 43: true, 44: true, 45: true, 46: true, 47: true}))
 
+// FIXME
 	// **
 	// *
   // **
-	l7.PushFront(NewPiece(2, 3, 'G', []uint8{03, 02, 03}, map[int]bool {
-		0: true, 12: true, 24: true, 36: true, 48: true}))
+	l7.PushFront(NewPiece(7, 2, 3, 'G', []uint8{0x3, 0x2, 0x3}, map[int]bool {
+		0: true, 10: true, 20: true, 30: true}))
 
 	// **
 	//  *
   // **
-	l7.PushFront(NewPiece(2, 3, 'G', []uint8{03, 01, 03}, map[int]bool {
-		10: true, 22: true, 34: true, 46: true, 58: true}))
+	l7.PushFront(NewPiece(7, 2, 3, 'G', []uint8{0x3, 0x1, 0x3}, map[int]bool {
+		8: true, 18: true, 28: true, 38: true}))
 
 		////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -261,39 +260,39 @@ func (ps pieceset) createAllPermutations() {
 
 	// ***
 	// **
-	l8.PushFront(NewPiece(3, 2, 'H', []uint8{06, 07}, map[int]bool {0: true}))
+	l8.PushFront(NewPiece(8, 3, 2, 'H', []uint8{0x6, 0x7}, map[int]bool {0: true}))
 
 	// ***
 	//  **
-	l8.PushFront(NewPiece(3, 2, 'H', []uint8{03, 07}, map[int]bool {9: true}))
+	l8.PushFront(NewPiece(8, 3, 2, 'H', []uint8{0x3, 0x7}, map[int]bool {7: true}))
 
 	// **
 	// ***
-	l8.PushFront(NewPiece(3, 2, 'H', []uint8{07, 06}, map[int]bool {48: true}))
+	l8.PushFront(NewPiece(8, 3, 2, 'H', []uint8{0x7, 0x6}, map[int]bool {40: true}))
 
 	//  **
 	// ***
-	l8.PushFront(NewPiece(3, 2, 'H', []uint8{07, 03}, map[int]bool {57: true}))
+	l8.PushFront(NewPiece(8, 3, 2, 'H', []uint8{0x7, 0x3}, map[int]bool {57: true}))
 
 	// **
 	// **
 	// *
-	l8.PushFront(NewPiece(2, 3, 'H', []uint8{02, 03, 03}, map[int]bool {0: true}))
+	l8.PushFront(NewPiece(8, 2, 3, 'H', []uint8{0x2, 0x3, 0x3}, map[int]bool {0: true}))
 
 	// **
 	// **
 	//  *
-	l8.PushFront(NewPiece(2, 3, 'H', []uint8{01, 03, 03}, map[int]bool {10: true}))
+	l8.PushFront(NewPiece(8, 2, 3, 'H', []uint8{0x1, 0x3, 0x3}, map[int]bool {8: true}))
 
 	// *
 	// **
 	// **
-	l8.PushFront(NewPiece(2, 3, 'H', []uint8{03, 03, 02}, map[int]bool {48: true}))
+	l8.PushFront(NewPiece(8, 2, 3, 'H', []uint8{0x3, 0x3, 0x2}, map[int]bool {30: true}))
 
 	//  *
 	// **
 	// **
-	l8.PushFront(NewPiece(2, 3, 'H', []uint8{03, 03, 02}, map[int]bool {58: true}))
+	l8.PushFront(NewPiece(8, 2, 3, 'H', []uint8{0x3, 0x3, 0x2}, map[int]bool {58: true}))
 
 	////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -303,22 +302,22 @@ func (ps pieceset) createAllPermutations() {
 	// *
 	// ***
 	//   *
-	l9.PushFront(NewPiece(3, 3, 'O', []uint8{01, 07, 04}, map[int]bool {11: true, 48: true}))
+	l9.PushFront(NewPiece(9, 3, 3, 'O', []uint8{0x1, 0x7, 0x4}, map[int]bool {7: true, 30: true}))
 
 	// **
 	//  *
 	//  **
-	l9.PushFront(NewPiece(3, 3, 'O', []uint8{03, 02, 05}, map[int]bool {11: true, 48: true}))
+	l9.PushFront(NewPiece(9, 3, 3, 'O', []uint8{0x3, 0x2, 0x6}, map[int]bool {7: true, 30: true}))
 
 	//    *
 	//  ***
 	//  *
-	l9.PushFront(NewPiece(3, 3, 'O', []uint8{04, 07, 01}, map[int]bool {0: true, 57: true}))
+	l9.PushFront(NewPiece(9, 3, 3, 'O', []uint8{0x4, 0x7, 0x1}, map[int]bool {0: true, 57: true}))
 
 	//   **
 	//   *
 	//  **
-	l9.PushFront(NewPiece(3, 3, 'O', []uint8{05, 04, 03}, map[int]bool {0: true, 57: true}))
+	l9.PushFront(NewPiece(9, 3, 3, 'O', []uint8{0x6, 0x2, 0x3}, map[int]bool {0: true, 57: true}))
 
 	////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -328,22 +327,22 @@ func (ps pieceset) createAllPermutations() {
 	// *
 	// **
 	//  **
-	l10.PushFront(NewPiece(3, 3, 'O', []uint8{03, 06, 04}, map[int]bool {9: true, 48: true}))
+	l10.PushFront(NewPiece(10, 3, 3, 'O', []uint8{0x3, 0x6, 0x4}, map[int]bool {7: true, 30: true}))
 
 	//  **
 	// **
 	// *
-	l10.PushFront(NewPiece(3, 3, 'O', []uint8{04, 06, 03}, map[int]bool {0: true, 57: true}))
+	l10.PushFront(NewPiece(10, 3, 3, 'O', []uint8{0x4, 0x6, 0x3}, map[int]bool {0: true, 57: true}))
 
 	// **
 	//  **
 	//   *
-	l10.PushFront(NewPiece(3, 3, 'O', []uint8{01, 03, 06}, map[int]bool {9: true, 48: true}))
+	l10.PushFront(NewPiece(10, 3, 3, 'O', []uint8{0x1, 0x3, 0x6}, map[int]bool {7: true, 30: true}))
 
 	//   *
 	//  **
 	// **
-	l10.PushFront(NewPiece(3, 3, 'O', []uint8{06, 03, 01}, map[int]bool {0: true, 57: true}))
+	l10.PushFront(NewPiece(10, 3, 3, 'O', []uint8{0x6, 0x3, 0x1}, map[int]bool {0: true, 57: true}))
 
 	////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -353,40 +352,40 @@ func (ps pieceset) createAllPermutations() {
 	// *
 	// ***
 	//  *
-	l11.PushFront(NewPiece(3, 3, 'O', []uint8{02, 07, 04}, map[int]bool {0: true, 9: true, 48: true}))
+	l11.PushFront(NewPiece(11, 3, 3, 'O', []uint8{0x2, 0x7, 0x4}, map[int]bool {0: true, 7: true, 30: true}))
 
 	//   *
 	// ***
 	//  *
-	l11.PushFront(NewPiece(3, 3, 'O', []uint8{02, 07, 01}, map[int]bool {0: true, 9: true, 57: true}))
+	l11.PushFront(NewPiece(11, 3, 3, 'O', []uint8{0x2, 0x7, 0x1}, map[int]bool {0: true, 7: true, 57: true}))
 
 	//  *
 	// ***
 	// *
-	l11.PushFront(NewPiece(3, 3, 'O', []uint8{04, 07, 02}, map[int]bool {0: true, 48: true, 57: true}))
+	l11.PushFront(NewPiece(11, 3, 3, 'O', []uint8{0x4, 0x7, 0x2}, map[int]bool {0: true, 30: true, 57: true}))
 
 	//  *
 	// ***
 	//   *
-	l11.PushFront(NewPiece(3, 3, 'O', []uint8{01, 07, 02}, map[int]bool {9: true, 48: true, 57: true}))
+	l11.PushFront(NewPiece(11, 3, 3, 'O', []uint8{0x1, 0x7, 0x2}, map[int]bool {7: true, 30: true, 57: true}))
 
 	//  **
 	// **
 	//  *
-	l11.PushFront(NewPiece(3, 3, 'O', []uint8{02, 06, 03}, map[int]bool {0: true, 9: true, 57: true}))
+	l11.PushFront(NewPiece(11, 3, 3, 'O', []uint8{0x2, 0x6, 0x3}, map[int]bool {0: true, 7: true, 57: true}))
 
 	//  *
 	// **
 	//  **
-	l11.PushFront(NewPiece(3, 3, 'O', []uint8{03, 06, 02}, map[int]bool {9: true, 48: true, 57: true}))
+	l11.PushFront(NewPiece(11, 3, 3, 'O', []uint8{0x3, 0x6, 0x2}, map[int]bool {7: true, 30: true, 57: true}))
 
 	// **
 	//  **
 	//  *
-	l11.PushFront(NewPiece(3, 3, 'O', []uint8{02, 03, 06}, map[int]bool {0: true, 9: true, 48: true}))
+	l11.PushFront(NewPiece(11, 3, 3, 'O', []uint8{0x2, 0x3, 0x6}, map[int]bool {0: true, 7: true, 30: true}))
 
 	//  *
 	//  **
 	// **
-	l11.PushFront(NewPiece(3, 3, 'O', []uint8{06, 03, 02}, map[int]bool {0: true, 48: true, 57: true}))
+	l11.PushFront(NewPiece(11, 3, 3, 'O', []uint8{0x6, 0x3, 0x2}, map[int]bool {0: true, 30: true, 57: true}))
 }

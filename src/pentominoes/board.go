@@ -1,27 +1,75 @@
 // Package stringutil contains utility functions for working with strings.
 package pentominoes
 
-import "container/list"
+//import "fmt"
 
-const width = 12
+const width = 10
 const height = 6
 
 //
-// a board is a 12x6 array of bits.
+// a board is a 10x6 array of bits.
 // lower-right = (0, 0)
-// upper-left = (11, 5)
+// upper-left = (9, 5)
 //
 type board struct {
-	occupied_bits [6]uint16
-	placedPieces *list.List
+	occupiedBits [6]uint16
+	placedPieces map[int]*placement
 	pieceSet *pieceset
 }
 
 func NewBoard() *board {
 	b := new(board)
-	//b.occupied_bits = new([6]uint16)
-	b.placedPieces = list.New()
 	b.pieceSet = CreatePieceSet()
-
+	b.placedPieces = make(map[int]*placement)
 	return b;
+}
+
+func (b *board) PlacePiece(p *piece, x uint8, y uint8) {
+	b.placedPieces[p.index] = NewPlacement(p, x, y)
+	b.paintPiece(p, x, y)
+}
+
+func (b *board) paintPiece(p *piece, x uint8, y uint8) {
+	var row uint8
+	shift := uint8(x)
+	//fmt.Printf("shift: %x\n", shift)
+	for row = 0; row < p.height; row++ {
+		boardY := uint8(y) + row
+		pieceBits := uint16(p.bits[row]) << shift
+		//fmt.Printf("boardY: %d pieceBits: %x\n", boardY, pieceBits)
+		b.occupiedBits[boardY] = b.occupiedBits[boardY] | pieceBits
+	}
+}
+
+
+func (b *board) Display() string {
+	output := ""
+	offset := uint8(width * height - 1)
+	var cells [width * height]byte
+	for i := range cells {
+	    cells[i] = '.'
+	}
+
+	for _, pl := range b.placedPieces {
+		piece := pl.p
+		pieceX := pl.x
+		pieceY := pl.y
+		var r, c uint8
+
+		for r = 0; r < piece.height; r++ {
+			for c = 0; c < piece.width; c++ {
+				if (piece.bits[r] & (1 << uint8(c)) != 0) {
+					cells[offset - ((width * (pieceY + r)) + pieceX + c)] = piece.symbol
+				}
+			}
+		}
+	}
+	for y := 0; y < height; y++ {
+		offset := width * y
+		cellRow := string(cells[offset : offset + width])
+		output += cellRow
+		output += "\n"
+	}
+
+	return output
 }

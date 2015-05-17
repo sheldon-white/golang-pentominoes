@@ -21,26 +21,40 @@ func NewBoard() *board {
 	b := new(board)
 	b.pieceSet = CreatePieceSet()
 	b.placedPieces = make(map[int]*placement)
+
 	return b;
 }
 
 func (b *board) PlacePiece(p *piece, x uint8, y uint8) {
 	b.placedPieces[p.index] = NewPlacement(p, x, y)
-	b.paintPiece(p, x, y)
+	b.paintPieceOnBoard(p, x, y)
 }
 
-func (b *board) paintPiece(p *piece, x uint8, y uint8) {
+func (b *board) paintPieceOnBoard(p *piece, x uint8, y uint8) {
 	var row uint8
 	shift := uint8(x)
-	//fmt.Printf("shift: %x\n", shift)
+
 	for row = 0; row < p.height; row++ {
 		boardY := uint8(y) + row
 		pieceBits := uint16(p.bits[row]) << shift
-		//fmt.Printf("boardY: %d pieceBits: %x\n", boardY, pieceBits)
 		b.occupiedBits[boardY] = b.occupiedBits[boardY] | pieceBits
 	}
 }
 
+func (b *board) CanPlacePieceAtPoint(p *piece, x uint8, y uint8) bool {
+	var row uint8
+	shift := uint8(x)
+
+	for row = 0; row < p.height; row++ {
+		boardY := uint8(y) + row
+		pieceBits := uint16(p.bits[row]) << shift
+		if (b.occupiedBits[boardY] & pieceBits != 0) {
+			return false
+		}
+	}
+
+	return true
+}
 
 func (b *board) Display() string {
 	output := ""

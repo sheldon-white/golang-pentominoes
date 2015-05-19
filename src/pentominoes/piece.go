@@ -3,7 +3,7 @@ package pentominoes
 
 //import "fmt"
 
-type piece struct {
+type Piece struct {
 	index int
 	width, height uint8
 	symbol byte
@@ -11,8 +11,8 @@ type piece struct {
 	forbiddenPositions map[int]bool
 }
 
-func NewPiece(index int, width uint8, height uint8, symbol byte, bits []uint8, forbiddenPositions map[int]bool) *piece {
-	p := new(piece)
+func NewPiece(index int, width uint8, height uint8, symbol byte, bits []uint8, forbiddenPositions map[int]bool) *Piece {
+	p := new(Piece)
 	p.index = index
 	p.width = width
 	p.height = height
@@ -23,7 +23,13 @@ func NewPiece(index int, width uint8, height uint8, symbol byte, bits []uint8, f
 	return p
 }
 
-func (p piece) Display() string {
+func (p *Piece) PositionForbidden(idx int) bool {
+	_, forbidden := p.forbiddenPositions[idx]
+
+	return forbidden
+}
+
+func (p *Piece) Display() string {
 	output := ""
 	var r, row, col uint8
 	row = p.height - 1

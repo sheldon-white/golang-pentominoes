@@ -1,20 +1,28 @@
 package pentominoes
 
-import "fmt"
+import (
+	"testing"
+	"fmt"
+	"github.com/stretchr/testify/assert"
+	 )
 
 func ExamplePieceConstructor() {
-	p := NewPiece(1, 4, 2, 'S', []uint8{03, 016}, map[int]bool {8: true, 48: true})
-	fmt.Printf("Piece: %+v\n", p)
+	p := NewPiece(1, 4, 2, 'S', []uint8{03, 016}, map[int]bool{8: true, 48: true})
+	fmt.Printf("Piece: %d %d %d %d\n", p.index, p.width, p.height, p.symbol)
 	// Output:
-  // Piece: &{index:1 width:4 height:2 symbol:83 bits:[3 14] forbiddenPositions:map[8:true 48:true]}
+	// Piece: 1 4 2 83
 }
 
-
 func ExamplePieceDisplay() {
-	p := NewPiece(1, 4, 2, 'S', []uint8{03, 016}, map[int]bool {8: true, 48: true})
+	p := NewPiece(1, 4, 2, 'S', []uint8{03, 016}, map[int]bool{8: true, 48: true})
 	output := p.Display()
 	fmt.Printf(output)
 	// Output:
-  // SSS.
+	// SSS.
 	// ..SS
+}
+
+func TestForbiddenPositions(t *testing.T) {
+	p := NewPiece(1, 4, 2, 'S', []uint8{03, 016}, map[int]bool{8: true, 48: true})
+	assert.True(t, p.PositionForbidden(8), "piece isn't placeable there")
 }

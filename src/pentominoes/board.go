@@ -62,6 +62,13 @@ func (b *Board) CanPlacePieceAtPoint(p *Piece, x uint8, y uint8) bool {
 		return false
 	}
 
+	if x + p.width > BoardWidth {
+		return false
+	}
+	if y + p.height > BoardHeight {
+		return false
+	}
+
 	for row = 0; row < p.height; row++ {
 		boardY := uint8(y) + row
 		pieceBits := uint16(p.bits[row]) << shift
@@ -69,7 +76,6 @@ func (b *Board) CanPlacePieceAtPoint(p *Piece, x uint8, y uint8) bool {
 			return false
 		}
 	}
-
 	return true
 }
 

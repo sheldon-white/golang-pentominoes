@@ -3,13 +3,16 @@ package pentominoes
 
 import "fmt"
 
+var positionsScanned = 0
+var solutionCount = 0
+
 type Iterator struct {
 	board          *Board
 	pieceset       *PieceSet
-	x, y           uint8  // current point where we're trying to place a piece
-	orientationIdx int  // which orientation in the pieceSet
-	pieceIdx       int  // what piece in the piece set we're placing
-	done           bool // are we done?
+	x, y           uint8 // current point where we're trying to place a piece
+	orientationIdx int   // which orientation in the pieceSet
+	pieceIdx       int   // what piece in the piece set we're placing
+	done           bool  // are we done?
 }
 
 // NewIterator is a constructor
@@ -38,10 +41,16 @@ func (i *Iterator) Clone() *Iterator {
 // It's the heart or the program.
 func (i *Iterator) IterateThroughLevel() {
 	for !i.Done() {
-
-		var x uint8 = i.GetX()
-		var y uint8 = i.GetY()
+		// Now we need to see if the updated board has any unfillable holes (size not a multiple of 5)
+		x := i.GetX()
+		y := i.GetY()
 		piece := i.GetOrientation()
+		if !i.board.Fillable() {
+			//fmt.Printf("\nILLEGAL: x:%d y:%d pIdx:%d oIdx:%d\n", int(x), int(y), i.pieceIdx, i.orientationIdx)
+			//fmt.Printf("\n" + i.board.Display() + "\n\n")
+			return // not legal, back up a node
+		}
+
 		if i.board.CanPlacePieceAtPoint(piece, x, y) {
 			// clone the iterator, place the piece on the clone, recurse down to next level
 			newIterator := i.Clone()
@@ -50,15 +59,21 @@ func (i *Iterator) IterateThroughLevel() {
 			newIterator.orientationIdx = 0
 			newIterator.pieceIdx++
 			newIterator.board.PlacePiece(piece, x, y)
-			fmt.Printf("\nx:%d y:%d pIdx:%d oIdx:%d\n", int(x), int(y), i.pieceIdx, i.orientationIdx)
-			fmt.Printf("\n" + i.board.Display() + "\n\n")
 
-						// did we find a solution?
+			//fmt.Printf("\nx:%d y:%d pIdx:%d oIdx:%d\n", int(x), int(y), i.pieceIdx, i.orientationIdx)
+			//fmt.Printf("\n" + i.board.Display() + "\n\n")
+
+			// did we find a solution?
 			if newIterator.pieceIdx == 12 {
-				fmt.Printf(newIterator.board.Display())
+				solutionCount++
+				fmt.Printf("\nSOLUTION %d\n%s\n", solutionCount, newIterator.board.Display())
 			} else {
 				newIterator.IterateThroughLevel()
 			}
+		}
+		positionsScanned++
+		if positionsScanned % 1000000 == 0 {
+			fmt.Printf("%d positions scanned\n", positionsScanned)
 		}
 		i.Advance()
 	}
@@ -81,7 +96,6 @@ func (i *Iterator) Advance() {
 		}
 	}
 }
-
 
 func (i *Iterator) Done() bool {
 	return i.done

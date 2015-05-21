@@ -31,46 +31,18 @@ func (ps *PieceSet) GetOrientation(pieceIdx int, orientationIdx int) *Piece {
 
 func (ps *PieceSet) createAllPermutations() {
 	l0 := []*Piece{}
+	// By adding only 2 orientations to this piece, we automatically eliminate solutions that are
+	// merely mirror images of other solutions
 
 	// ***
 	//   **
 	l0 = append(l0, NewPiece(0, 4, 2, 'S', []uint8{0x3, 0xe}, map[int]bool{6: true, 40: true}))
-
-	//  ***
-	// **
-	l0 = append(l0, NewPiece(0, 4, 2, 'S', []uint8{0xc, 0x7}, map[int]bool{0: true, 56: true}))
-
-	// **
-	//  ***
-	l0 = append(l0, NewPiece(0, 4, 2, 'S', []uint8{0x7, 0xc}, map[int]bool{6: true, 40: true}))
-
-	//   **
-	// ***
-	l0 = append(l0, NewPiece(0, 4, 2, 'S', []uint8{0xe, 0x3}, map[int]bool{0: true, 56: true}))
 
 	// *
 	// **
 	//  *
 	//  *
 	l0 = append(l0, NewPiece(0, 2, 4, 'S', []uint8{0x1, 0x1, 0x3, 0x2}, map[int]bool{8: true, 20: true}))
-
-	//  *
-	//  *
-	// **
-	// *
-	l0 = append(l0, NewPiece(0, 2, 4, 'S', []uint8{0x2, 0x3, 0x1, 0x1}, map[int]bool{0: true, 58: true}))
-
-	//  *
-	// **
-	// *
-	// *
-	l0 = append(l0, NewPiece(0, 2, 4, 'S', []uint8{0x2, 0x2, 0x3, 0x1}, map[int]bool{0: true, 58: true}))
-
-	// *
-	// *
-	// **
-	//  *
-	l0 = append(l0, NewPiece(0, 2, 4, 'S', []uint8{0x1, 0x3, 0x2, 0x2}, map[int]bool{8: true, 20: true}))
 
 	ps.piecePermutations[0] = l0
 
@@ -323,22 +295,22 @@ func (ps *PieceSet) createAllPermutations() {
 	// *
 	// ***
 	//   *
-	l9 = append(l9, NewPiece(9, 3, 3, 'O', []uint8{0x1, 0x7, 0x4}, map[int]bool{7: true, 30: true}))
+	l9 = append(l9, NewPiece(9, 3, 3, 'J', []uint8{0x1, 0x7, 0x4}, map[int]bool{7: true, 30: true}))
 
 	// **
 	//  *
 	//  **
-	l9 = append(l9, NewPiece(9, 3, 3, 'O', []uint8{0x3, 0x2, 0x6}, map[int]bool{7: true, 30: true}))
+	l9 = append(l9, NewPiece(9, 3, 3, 'J', []uint8{0x3, 0x2, 0x6}, map[int]bool{7: true, 30: true}))
 
 	//    *
 	//  ***
 	//  *
-	l9 = append(l9, NewPiece(9, 3, 3, 'O', []uint8{0x4, 0x7, 0x1}, map[int]bool{0: true, 57: true}))
+	l9 = append(l9, NewPiece(9, 3, 3, 'J', []uint8{0x4, 0x7, 0x1}, map[int]bool{0: true, 57: true}))
 
 	//   **
 	//   *
 	//  **
-	l9 = append(l9, NewPiece(9, 3, 3, 'O', []uint8{0x6, 0x2, 0x3}, map[int]bool{0: true, 57: true}))
+	l9 = append(l9, NewPiece(9, 3, 3, 'J', []uint8{0x6, 0x2, 0x3}, map[int]bool{0: true, 57: true}))
 
 	ps.piecePermutations[9] = l9
 
@@ -349,22 +321,22 @@ func (ps *PieceSet) createAllPermutations() {
 	// *
 	// **
 	//  **
-	l10 = append(l10, NewPiece(10, 3, 3, 'O', []uint8{0x3, 0x6, 0x4}, map[int]bool{7: true, 30: true}))
+	l10 = append(l10, NewPiece(10, 3, 3, 'K', []uint8{0x3, 0x6, 0x4}, map[int]bool{7: true, 30: true}))
 
 	//  **
 	// **
 	// *
-	l10 = append(l10, NewPiece(10, 3, 3, 'O', []uint8{0x4, 0x6, 0x3}, map[int]bool{0: true, 57: true}))
+	l10 = append(l10, NewPiece(10, 3, 3, 'K', []uint8{0x4, 0x6, 0x3}, map[int]bool{0: true, 57: true}))
 
 	// **
 	//  **
 	//   *
-	l10 = append(l10, NewPiece(10, 3, 3, 'O', []uint8{0x1, 0x3, 0x6}, map[int]bool{7: true, 30: true}))
+	l10 = append(l10, NewPiece(10, 3, 3, 'K', []uint8{0x1, 0x3, 0x6}, map[int]bool{7: true, 30: true}))
 
 	//   *
 	//  **
 	// **
-	l10 = append(l10, NewPiece(10, 3, 3, 'O', []uint8{0x6, 0x3, 0x1}, map[int]bool{0: true, 57: true}))
+	l10 = append(l10, NewPiece(10, 3, 3, 'K', []uint8{0x6, 0x3, 0x1}, map[int]bool{0: true, 57: true}))
 
 	ps.piecePermutations[10] = l10
 

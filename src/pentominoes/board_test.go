@@ -50,3 +50,23 @@ func TestCanPlacePieceAtPoint(t *testing.T) {
 	b.PlacePiece(p1, 0, 0)
 	assert.False(t, b.CanPlacePieceAtPoint(p2, 1, 1), "shouldn't be able to place the piece")
 }
+
+func TestFillableTrue(t *testing.T) {
+	b := NewBoard()
+	p1 := NewPiece(1, 4, 2, 'S', []uint8{0x3, 0xe}, map[int]bool{8: true, 48: true})
+	p2 := NewPiece(2, 3, 3, 'Q', []uint8{0x1, 0x1, 0x7}, map[int]bool{8: true, 48: true})
+	b.PlacePiece(p1, 0, 1)
+	b.PlacePiece(p2, 3, 3)
+	fmt.Printf(b.Display())
+	assert.True(t, b.Fillable(), "should be fillable")
+}
+
+func TestFillableFalse(t *testing.T) {
+	b := NewBoard()
+	p1 := NewPiece(1, 4, 2, 'S', []uint8{0x3, 0xe}, map[int]bool{8: true, 48: true})
+	p2 := NewPiece(2, 3, 3, 'Q', []uint8{0x1, 0x3, 0x6}, map[int]bool{8: true, 48: true})
+	b.PlacePiece(p1, 0, 1)
+	b.PlacePiece(p2, 3, 3)
+	fmt.Printf(b.Display())
+	assert.False(t, b.Fillable(), "shouldn't be fillable")
+}

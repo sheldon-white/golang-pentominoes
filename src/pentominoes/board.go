@@ -57,15 +57,15 @@ func (b *Board) paintPieceOnBoard(p *Piece, x uint8, y uint8) {
 func (b *Board) CanPlacePieceAtPoint(p *Piece, x uint8, y uint8) bool {
 	var row uint8
 	shift := uint8(x)
-	cellIdx := int(y) * BoardWidth + int(x)
+	cellIdx := int(y)*BoardWidth + int(x)
 	if p.PositionForbidden(cellIdx) {
 		return false
 	}
 
-	if x + p.width > BoardWidth {
+	if x+p.width > BoardWidth {
 		return false
 	}
-	if y + p.height > BoardHeight {
+	if y+p.height > BoardHeight {
 		return false
 	}
 
@@ -78,6 +78,7 @@ func (b *Board) CanPlacePieceAtPoint(p *Piece, x uint8, y uint8) bool {
 	}
 	return true
 }
+
 
 // Display returns a string representation of the board.
 func (b *Board) Display() string {
@@ -110,4 +111,65 @@ func (b *Board) Display() string {
 	}
 
 	return output
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+func (b *Board) Fillable() bool {
+	var checkedBits [6]uint16
+	for y := 0; y < BoardHeight; y++ {
+		var mask uint16 = 1
+		for x := 0; x < BoardWidth; x++ {
+			// Is the bit empty and unvisited?
+			if (b.occupiedBits[y] & mask == 0) && (checkedBits[y] & mask == 0) {
+				// check the holesize then...
+				size := b.holeSize(x, y, &checkedBits)
+				//fmt.Printf("hole size = %d\n", size)
+				if size%5 != 0 {
+					return false
+				}
+			}
+			mask <<= 1
+		}
+	}
+	return true
+}
+
+func (b *Board) holeSize(x int, y int, checkedBits *[6]uint16) int {
+	count := 1
+	var mask uint16
+
+	// mark this bit as checked
+	checkedBits[y] |= (1 << uint(x))
+
+	// if we're not on the left edge, check left
+	if x < BoardWidth - 1 {
+		mask = 1 << uint(x+1)
+		if (b.occupiedBits[y] & mask == 0) && (checkedBits[y] & mask == 0) {
+			count += b.holeSize(x+1, y, checkedBits)
+		}
+	}
+	// if we're not on the right edge, check right
+	if x > 0 {
+		mask = 1 << uint(x-1)
+		if (b.occupiedBits[y] & mask == 0) && (checkedBits[y] & mask == 0) {
+			count += b.holeSize(x-1, y, checkedBits)
+		}
+	}
+	// if we're not on the top edge, check up
+	if y < BoardHeight - 1 {
+		mask = 1 << uint(x)
+		if (b.occupiedBits[y+1] & mask == 0) && (checkedBits[y+1] & mask == 0) {
+			count += b.holeSize(x, y+1, checkedBits)
+		}
+	}
+	// if we're not on the bottom edge, check down
+	if y > 0 {
+		mask = 1 << uint(x)
+		if (b.occupiedBits[y-1] & mask == 0) && (checkedBits[y-1] & mask == 0) {
+			count += b.holeSize(x, y-1, checkedBits)
+		}
+	}
+
+	return count
 }
